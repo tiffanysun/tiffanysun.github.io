@@ -1,111 +1,280 @@
-<!DOCTYPE html> 
-<html> 
-	<head> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiffany Sun — UX & Design Strategist</title>
+<meta name="description" content="Tiffany Sun is a UX & Design Strategist based in Oakland, CA." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#faf7f1;--ink:#221d17;--ink2:#4a4239;--muted:#8c8376;--faint:#e6dfd3;--accent:#bf5a3c;--maxw:720px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#15120e;--ink:#ece5da;--ink2:#bdb4a6;--muted:#8a8175;--faint:#2b2620;--accent:#e0795c}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+    line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+  /* ===== TOP NAV (links upper-right) ===== */
+  .topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+  .topbar.scrolled{border-color:var(--faint)}
+  .bar-in{max-width:1180px;margin:0 auto;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:flex-end}
+  .brand{font-family:'DM Serif Display',serif;font-size:20px;letter-spacing:-.01em}
+  .navlinks{display:flex;gap:30px;font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .navlinks a{position:relative;transition:color .2s}
+  .navlinks a:hover{color:var(--ink)}
+  .navlinks a.active{color:var(--ink)}
+  .navlinks a.active::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--accent)}
+  @media(max-width:560px){.navlinks{gap:18px;font-size:11px}}
 
-		<link rel="stylesheet" type="text/css" href="main.css">
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .fade{opacity:0;transform:translateY(12px);animation:fade .8s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes fade{to{opacity:1;transform:none}}
+  .d1{animation-delay:.04s}.d2{animation-delay:.12s}.d3{animation-delay:.20s}
 
-		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=roboto">
+  /* ===== MASTHEAD ===== */
+  header.masthead{padding:80px 0 30px}
+  .kicker{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+  .name{font-family:'DM Serif Display',serif;font-weight:500;font-size:clamp(40px,7vw,66px);line-height:1.0;letter-spacing:-.02em}
+  .meta-line{margin-top:16px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .bio{margin-top:28px;max-width:54ch;font-size:clamp(19px,2.4vw,22px);line-height:1.5;color:var(--ink2);letter-spacing:-.005em}
+  .bio em{font-family:'DM Serif Display',serif;font-style:italic;color:var(--ink)}
+  .links{margin-top:26px;display:flex;gap:8px;flex-wrap:wrap;font-size:15px;color:var(--muted);align-items:center}
+  .links a{color:var(--ink);border-bottom:1px solid var(--faint);padding-bottom:1px;transition:border-color .2s,color .2s}
+  .links a:hover{border-color:var(--accent);color:var(--accent)}
+  .links .sep{color:var(--faint)}
 
-	<title>Tiffany Sun Portfolio</title> 
-	
-	</head> 
-	<body> 
+  /* ===== SECTION HEADERS ===== */
+  section{padding:46px 0}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid var(--ink);padding-top:18px;margin-bottom:26px;gap:16px}
+  .sec-head h2{font-family:'DM Serif Display',serif;font-size:clamp(26px,3.4vw,38px);line-height:1;letter-spacing:-.01em}
+  .sec-head .cnt{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
-<!--remember that pizza is power-->  
-			<div class="header" id="header"> 
-			<div style="font-family: 'Roboto', sans-serif;"> <h2>Tiffany Sun </h2></div>
-			</div> 
+  /* ===== WORK list ===== */
+  .row{display:grid;grid-template-columns:34px 1fr auto;gap:18px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--faint);transition:padding-left .28s cubic-bezier(.2,.7,.2,1)}
+  .row:first-of-type{border-top:1px solid var(--faint)}
+  .row:hover{padding-left:10px}
+  .idx{font-family:'DM Serif Display',serif;font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums;line-height:1.7}
+  .row:hover .idx{color:var(--accent)}
+  .t{font-family:'DM Serif Display',serif;font-weight:500;font-size:clamp(21px,2.6vw,25px);letter-spacing:-.01em;line-height:1.15;color:var(--ink)}
+  .t .arrow{font-family:'Inter';font-size:15px;color:var(--muted);opacity:0;margin-left:8px;transition:opacity .2s,transform .2s;display:inline-block}
+  .row:hover .t .arrow{opacity:1;transform:translate(2px,-2px);color:var(--accent)}
+  .desc{color:var(--muted);font-size:15px;margin-top:7px;max-width:50ch;line-height:1.55}
+  .meta{text-align:right;white-space:nowrap}
+  .tag{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+  .row.soon .meta .tag::after{content:' · soon';color:var(--accent);font-weight:600}
+  @media(max-width:560px){.row{grid-template-columns:26px 1fr;gap:12px}.meta{grid-column:2;text-align:left;margin-top:8px}}
 
-			<div style="font-family: 'Roboto', sans-serif;">
-			<div class="nav_container">
-				<div class="sidebar" id="menu">
-					<div> <a class="nav-links" href="about.html" title="about me">about</a> </div> 
-					<div> 
-					<a class="nav-links" href="contact.html" title="contact">contact</a></div> 
-				</div> 
+  /* ===== EXPERIMENTS magazine spread (breaks out wide) ===== */
+  #experiments .breakout{width:min(1180px,94vw);margin-left:50%;transform:translateX(-50%)}
+  .exp-intro{margin:2px 0 30px;max-width:52ch;color:var(--muted);font-size:15px;line-height:1.5}
+  .media{display:block;border-radius:14px;background-size:200% 200%;animation:drift 9s ease-in-out infinite alternate}
+  @keyframes drift{from{background-position:0% 50%}to{background-position:100% 50%}}
+  .e-fig{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-top:14px}
+  .e-ct{font-family:'DM Serif Display',serif;font-size:clamp(19px,2.2vw,24px);line-height:1.15;margin-top:7px;color:var(--ink)}
+  .e-cd{color:var(--muted);font-size:13.5px;margin-top:5px;line-height:1.5;max-width:40ch}
+  .vcap{writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .mag{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;align-items:start}
+  .e1 figure{transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+  .e1 figure:hover{transform:translateY(-5px)}
+  .e1 .feature{grid-column:1/7}.e1 .feature .media{height:320px}
+  .e1 .sidecap{grid-column:7/8;display:flex;justify-content:center;padding-top:30px}
+  .e1 .tall{grid-column:8/12;margin-top:0}.e1 .tall .media{height:320px}
+  .e1 .quote{grid-column:1/7;margin-top:22px;font-family:'DM Serif Display',serif;font-size:clamp(24px,3vw,34px);line-height:1.12;color:var(--ink)}
+  .e1 .quote em{font-style:italic;color:var(--accent)}
+  .e1 .small{grid-column:8/12;margin-top:8px}.e1 .small .media{height:240px}
+  .e1 .wide{grid-column:4/10;margin-top:28px}.e1 .wide .media{height:300px}
+  /* slow load-in as boxes scroll into view */
+  .e1 figure,.e1 .quote{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .e1 figure.in,.e1 .quote.in{opacity:1;transform:none}
+  .e1 figure.in:hover{transform:translateY(-5px)}
+  @media(max-width:680px){
+    #experiments .breakout{width:100%;margin-left:0;transform:none}
+    .mag{grid-template-columns:1fr;gap:30px}
+    .e1 .feature,.e1 .tall,.e1 .quote,.e1 .small,.e1 .wide{grid-column:1!important;margin-top:0!important}
+    .e1 .sidecap{display:none}
+    .e1 .feature .media,.e1 .tall .media,.e1 .small .media,.e1 .wide .media{height:220px}
+  }
 
-				<div id="nav_page_1">
-					<div class="project_link"> 
-						<a href="dailyui.html" title="dailyui">daily ui</a></div>
-					<div class="project_link"><a href="sense.html" title="sense">sense</a>
-					</div>
-					<div class="project_link"><a href="cbcf.html" title="sense">CBCF Hackathon</a>
-					</div>
-					<div class="project_link"><a href="parsegarden.html" title="sense">Parsegarden</a>
-					</div>
-					<div class="project_link"><a href="http://www.pizzaispower.com" title="sense">pizza is power</a>
-					</div>
-</div> 
-<br>
-<!-- 
+  /* ===== SPEAKING & WORKSHOPS ===== */
+  .spk{display:grid;grid-template-columns:1fr 1fr;gap:34px 56px}
+  @media(max-width:640px){.spk{grid-template-columns:1fr;gap:30px}}
+  .spk .banner{display:block;width:100%;aspect-ratio:16/10;border-radius:12px;margin-bottom:16px;position:relative;overflow:hidden;object-fit:cover}
+  .spk .banner.ph::after{content:'Add photo';position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.9);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .spk .col h3{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .spk .item{padding:16px 0;border-bottom:1px solid var(--faint)}
+  .spk .item:first-of-type{border-top:1px solid var(--faint)}
+  .spk .item .ti{font-family:'DM Serif Display',serif;font-size:clamp(17px,2vw,20px);line-height:1.25;color:var(--ink)}
+  .spk .item .mt{color:var(--muted);font-size:13px;margin-top:4px;letter-spacing:.01em}
 
- 			<nav > 
-			<ul class="nav"> 
-				<li><a class="nav-links" href="about.html" title="about me">about</a>
-				</li>
-				<li><a class="nav-links" href="projects.html" title="Projects">projects</a>
-					<ul>
-						<li><a href="dailyui.html" title="dailyui">daily ui</a>
-						</li>
-						<li><a href="sense.html" title="sense">sense</a>
-						<li><a href="http://www.pizzaispower.com" title="Pizza is Power">pizza is power </a> </li>
-						</li> 
-					</ul>
-				<li><a href="contact.html" title="contact">contact</a>
-				</li> 
-				</li>
-			</ul> 
-		</nav> -->
-	</div>
+  /* ===== ABOUT / CONTACT ===== */
+  .about p{margin-top:18px;max-width:60ch;font-size:17px;color:var(--ink2);line-height:1.65}
+  .about p:first-child{margin-top:0;font-family:'DM Serif Display',serif;font-size:clamp(20px,2.6vw,24px);color:var(--ink);line-height:1.4}
+  .about a,.contact a.inline{color:var(--ink);border-bottom:1px solid var(--faint);transition:border-color .2s,color .2s}
+  .about a:hover,.contact a.inline:hover{border-color:var(--accent);color:var(--accent)}
+  .contact .big{font-family:'DM Serif Display',serif;font-size:clamp(28px,4.6vw,46px);line-height:1.1;letter-spacing:-.01em;max-width:18ch}
+  .contact .big em{font-style:italic;color:var(--accent)}
+  .contact .cta{display:inline-block;margin-top:24px;background:var(--ink);color:var(--bg);padding:14px 28px;border-radius:100px;font-weight:600;font-size:15px;transition:transform .25s,opacity .25s}
+  .contact .cta:hover{transform:translateY(-3px);opacity:.92}
 
-			<!-- <div class="subtitle">
-			<div style="font-family: 'Roboto', san-serif;">
- 			A multidisciplinary designer specializing in UX, UI and visual design. </div></div> -->
+  /* ===== CURSOR PREVIEW (Work only) ===== */
+  .preview{position:fixed;top:0;left:0;width:248px;height:168px;border-radius:14px;overflow:hidden;pointer-events:none;opacity:0;transform:translate(28px,-50%) scale(.92);transition:opacity .22s ease,transform .22s cubic-bezier(.2,.7,.2,1);z-index:60;box-shadow:0 26px 60px -22px rgba(40,30,20,.5)}
+  .preview.on{opacity:1;transform:translate(28px,-50%) scale(1)}
+  .preview .img{width:100%;height:100%;background-size:cover;background-position:center;display:grid;place-items:center;color:rgba(255,255,255,.94);font-weight:600;font-size:13px;text-align:center;padding:14px;line-height:1.4}
+  @media (hover:none),(max-width:640px){.preview{display:none}}
 
-		<div class="content"> 
-		<div style="font-family: 'Roboto', sans-serif;">
- 	<!-- 	 <h2>Process</h2>
- 		 <p>
- 		 Empathy comes <span style="color:blue">first</span> in understanding the user. User behavior is always evolving and so should our designs.
- 		</p>  -->
- 	<!-- 	<img src="http://66.media.tumblr.com/tumblr_m5s0xsDxih1r1s7izo1_500.gif" alt="cat"/>
- 		<br/> -->
- 		
- 		<!--projects live here-->
- 		<div class="projects">
- 		<div style="font-family: 'Roboto', sans-serif;">
- 		<h3>Projects</h3>
- 		<br/>
- 		<div style="font-family: 'Roboto', sans-serif;"> 
- 		</a>
- 			
- 			<a class="image-hover" href="sense.html" class="sense" title="sense" alt="sense" color=#663399>
- 			<img src="images/boats.png" alt="boats"/>
- 			 <figcaption>
- 				<h>Sense</h1><p> My Role: UX Designer, Ideation & Research, Interaction Design, Visual Design </p>
- 			 </figcaption>
- 		 </a>
+  footer{border-top:1px solid var(--faint);margin-top:40px}
+  footer .fin{max-width:var(--maxw);margin:0 auto;padding:28px 24px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
 
- 			<a class="image-hover" href="parsegarden.html">
- 			<img src="images/bigsur.png" alt="bigsur"/></a>
- 			<a class="image-hover" href="dailyui.html">
- 			<img src="images/forestfog.png" alt="forest"/></a>
- 		</div>
-		</div> 
-<!--footer images -->
-		<div id="footer">
-		<div style="font-family: 'Roboto', sans-serif;">
-					<a href="https://www.facebook.com/profile.php?id=744720093" class="facebook" title="facebook" alt="facebook-icon"> 
-				<img src="images/Facebook-color.png" alt="facebook-icon"/></a> 
+<!-- ===== TOP NAV ===== -->
+<nav class="topbar" id="topbar">
+  <div class="bar-in">
+    <div class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#experiments">Experiments</a>
+      <a href="#speaking">Speaking</a>
+      <a href="#about">About</a>
+    </div>
+  </div>
+</nav>
 
-				<a href="https://twitter.com/tiffalopolus" class="twitter" title="twitter" alt="twitter-icon"> 
-				<img src="images/Twitter-color.png" alt="twitter-icon"/></a> 
-				
-				<a href="https://www.linkedin.com/in/tsun1" class="linkedin" title="LinkedIn" alt="witter-icon"> 
-				<img src="images/LinkedIn-color.png" alt="LinkedIn-icon"/></a>
+<a id="top"></a>
+<div class="wrap">
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="kicker fade d1">UX &amp; Design Strategist</div>
+    <h1 class="name fade d1">Tiffany Sun</h1>
+    <div class="meta-line fade d2" id="clock">Oakland, CA</div>
+    <p class="bio fade d2">I use research and design thinking to find the <em>right problem</em> before anyone builds the wrong solution — previously shaping products and services with Apple, Capital One, BBC &amp; the NHS.</p>
+    <div class="links fade d3">
+      <a href="https://www.linkedin.com/in/tsun1">LinkedIn</a><span class="sep">/</span>
+      <a href="mailto:tiffany.sun.886@gmail.com">Email</a><span class="sep">/</span>
+      <a href="#">Résumé</a>
+    </div>
+  </header>
 
-			</div> 
-	</body> 
-</html> 
+  <!-- WORK (now a section header on the landing page) -->
+  <section id="work">
+    <div class="sec-head"><h2>Work</h2></div>
+    <a class="row" href="#" data-bg="linear-gradient(135deg,#5b6cff,#9b5bff)" data-label="New Flagship — replace with project image">
+      <span class="idx">01</span><div class="main"><div class="t">New Flagship Project <span class="arrow">↗</span></div><div class="desc">Your strongest recent work — the ambiguous problem, how research reframed it, and the direction you set.</div></div><div class="meta"><span class="tag">Strategy</span></div>
+    </a>
+    <a class="row" href="https://www.tiffanysun.io/nhs" data-bg="linear-gradient(135deg,#c0392b,#e74c3c)" data-label="NHS Blood &amp; Transplant — replace with project image">
+      <span class="idx">02</span><div class="main"><div class="t">NHS Blood &amp; Transplant <span class="arrow">↗</span></div><div class="desc">Reducing blood wastage and transfusion cost for hospitals across Britain.</div></div><div class="meta"><span class="tag">Service Design</span></div>
+    </a>
+    <a class="row" href="https://www.tiffanysun.io/speedo" data-bg="linear-gradient(135deg,#0077b6,#00b4d8)" data-label="Speedo — replace with project image">
+      <span class="idx">03</span><div class="main"><div class="t">Speedo <span class="arrow">↗</span></div><div class="desc">From swimwear brand to <em>the</em> swim brand — research to inspire a new swim generation.</div></div><div class="meta"><span class="tag">Research · Brand</span></div>
+    </a>
+  </section>
+
+  <!-- EXPERIMENTS -->
+  <section id="experiments">
+    <div class="sec-head"><h2>Experiments</h2></div>
+    <p class="exp-intro">Loose, visual, mostly unfinished — type, motion, code and print I make to keep my hands moving.</p>
+    <div class="breakout">
+      <!-- Swap any <div class="media"> for <img class="media"> (GIF) or <video class="media" autoplay muted loop playsinline> -->
+      <div class="mag e1">
+        <figure class="feature"><a href="#"><div class="media" style="background:linear-gradient(120deg,#f72585,#7209b7,#3a0ca3)"></div></a><div class="e-fig">Fig. 01 — Creative Coding</div><div class="e-ct">Generative type study</div><div class="e-cd">Letterforms breaking apart and recombining on a grid.</div></figure>
+        <div class="sidecap"><span class="vcap">p5.js · 2025</span></div>
+        <figure class="tall"><a href="#"><div class="media" style="background:linear-gradient(120deg,#06d6a0,#1b9aaa,#118ab2)"></div></a><div class="e-fig">Fig. 02 — Print</div><div class="e-ct">Risograph series</div></figure>
+        <div class="quote">Experiments are where I think out loud — <em>no brief, no stakeholders.</em></div>
+        <figure class="small"><a href="#"><div class="media" style="background:linear-gradient(120deg,#ffd166,#ef8354,#e63946)"></div></a><div class="e-fig">Fig. 03 — WebGL</div><div class="e-ct">Cursor-driven sketch</div></figure>
+        <figure class="wide"><a href="#"><div class="media" style="background:linear-gradient(120deg,#4361ee,#4cc9f0,#80ffdb)"></div></a><div class="e-fig">Fig. 04 — Motion</div><div class="e-ct">Workshop in motion</div><div class="e-cd">Frames from a facilitation-deck animation loop.</div></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEAKING & WORKSHOPS -->
+  <section id="speaking">
+    <div class="sec-head"><h2>Speaking &amp; Workshops</h2></div>
+    <div class="spk">
+      <div class="col">
+        <!-- Replace with: <img class="banner" src="images/speaking.jpg" alt="Tiffany speaking"> -->
+        <span class="banner ph" style="background:linear-gradient(120deg,#bca,#8a8276)"></span>
+        <h3>Public Speaking</h3>
+        <div class="item"><div class="ti">Capsule: Transformative Collisions</div><div class="mt">C2 Conference · Montréal, Canada · 2018</div></div>
+        <div class="item"><div class="ti">The Future of Work: Collaboration &amp; Diversity</div><div class="mt">Sodexo · theCamp, Aix-en-Provence, France · 2018</div></div>
+        <div class="item"><div class="ti">Importance of Play in Design Thinking</div><div class="mt">Cube3 · Manchester, UK · 2017</div></div>
+        <div class="item"><div class="ti">Power of Making &amp; Breaking Stories</div><div class="mt">Ladies that UX · Manchester, UK · 2017</div></div>
+      </div>
+      <div class="col">
+        <!-- Replace with: <img class="banner" src="images/workshops.jpg" alt="Tiffany facilitating a workshop"> -->
+        <span class="banner ph" style="background:linear-gradient(120deg,#a9b1a0,#7c8270)"></span>
+        <h3>Workshops &amp; Facilitation</h3>
+        <div class="item"><div class="ti">Skills Mapping</div><div class="mt">Service Design Network · San Francisco, USA · 2019</div></div>
+        <div class="item"><div class="ti">Ideation</div><div class="mt">EM Lyon Business School · Lyon, France · 2018</div></div>
+        <div class="item"><div class="ti">Ideation</div><div class="mt">theCamp · Aix-en-Provence, France · 2017</div></div>
+        <div class="item"><div class="ti">Innovation Mashup</div><div class="mt">Enterprise City Festival · Manchester, UK · 2017</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="sec-head"><h2>About</h2></div>
+    <p>I find the right problem before anyone solves the wrong one.</p>
+    <p>I'm a UX &amp; design strategist based in Oakland, CA, with a Masters in Digital Experience Design from Hyper Island. I was one of the first designers in theCamp creative residency in the south of France.</p>
+    <p>I apply design thinking to digital products and services — leading research, setting direction, and bringing stakeholders along. I care about playful interactions and frameworks that make ambiguity workable. I've worked across Apple, Capital One, BBC, and the NHS, and I speak and run workshops on design thinking and creativity.</p>
+  </section>
+
+</div>
+
+<footer><div class="fin"><span>© 2026 Tiffany Sun</span><span>Oakland, CA</span></div></footer>
+
+<script>
+  // nav border on scroll
+  const topbar=document.getElementById('topbar');
+  addEventListener('scroll',()=>topbar.classList.toggle('scrolled',scrollY>8));
+
+  // scroll-spy active link
+  const secs=[...document.querySelectorAll('section')];
+  const links=new Map([...document.querySelectorAll('.navlinks a')].map(a=>[a.getAttribute('href').slice(1),a]));
+  const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=links.get(e.target.id);if(a)a.classList.add('active');}})},{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(s=>spy.observe(s));
+
+  // cursor-follow image preview on Work hover
+  const preview=document.createElement('div');preview.className='preview';
+  const pimg=document.createElement('div');pimg.className='img';preview.appendChild(pimg);
+  document.body.appendChild(preview);
+  let px=0,py=0,tx=0,ty=0;
+  document.querySelectorAll('.row[data-bg]').forEach(row=>{
+    row.addEventListener('mouseenter',()=>{pimg.style.background=row.dataset.bg;pimg.textContent=row.dataset.label||'';preview.classList.add('on');});
+    row.addEventListener('mouseleave',()=>preview.classList.remove('on'));
+  });
+  addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
+  (function follow(){px+=(tx-px)*0.18;py+=(ty-py)*0.18;preview.style.left=px+'px';preview.style.top=py+'px';requestAnimationFrame(follow);})();
+
+  // experiments: slow load-in as boxes enter view (works for vertical page scroll and side-scrolling the strip)
+  let stagger=0;
+  const revealer=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('in'),stagger*130);
+        stagger=(stagger+1)%4;
+        revealer.unobserve(e.target);
+      }
+    });
+  },{threshold:.25});
+  document.querySelectorAll('.e1 figure,.e1 .quote').forEach(el=>revealer.observe(el));
+
+  // live local clock
+  function tick(){
+    const now=new Date().toLocaleTimeString('en-US',{timeZone:'America/Los_Angeles',hour:'2-digit',minute:'2-digit'});
+    document.getElementById('clock').textContent='Oakland, CA · '+now+' local';
+  }
+  tick();setInterval(tick,15000);
+</script>
+</body>
+</html>
